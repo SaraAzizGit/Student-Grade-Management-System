@@ -8,7 +8,7 @@ public class Main {
         int ID, age, year;
         String fname;
         String lname;
-        String sex;
+        String gender;
         String semester;
         float CGPA;
         Course course;
@@ -50,7 +50,7 @@ public class Main {
             System.out.print("Enter Student " + (i + 1) + " ID Number: ");
             s[i].ID = input.nextInt();
             System.out.print("Enter Student " + (i + 1) + " Gender: ");
-            s[i].sex = input.next();
+            s[i].gender = input.next();
             System.out.print("Enter Student " + (i + 1) + " Age: ");
             s[i].age = input.nextInt();
             System.out.print("Enter Student " + (i + 1) + " Year: ");
@@ -138,13 +138,33 @@ public class Main {
         }
     }
 
+    static void Status(float sta) {
+        if (sta == 4) {
+            System.out.println("Status: Excellent");
+        } else if (sta >= 3.75 && sta <= 3.99) {
+            System.out.println("Status: Very Good");
+        } else if (sta > 3.5 && sta <= 3.74) {
+            System.out.println("Status: Good");
+        } else if (sta > 3.49 && sta <= 3.25) {
+            System.out.println("Status: Above Average");
+        } else if (sta >= 2.0 && sta <= 3.24) {
+            System.out.println("Status: Average");
+        } else if (sta > 1.75 && sta <= 1.99) {
+            System.out.println("Status: Satisfactory");
+        } else if (sta > 1.00 && sta <= 1.74) {
+            System.out.println("Status: Pass");
+        } else if (sta > 0.0 && sta < 1.0) {
+            System.out.println("Status: Fail");
+        }
+    }
+
     static void Display_GradeReport() {
         System.out.println("\n============================================================================");
         System.out.println("                         Student Grade Report:");
         System.out.println("============================================================================");
         for (int i = 0; i < n; i++) {
             System.out.println("Full Name: " + s[i].fname + " " + s[i].lname + "\t\tYear:" + s[i].year + "\t\tSemester: " + s[i].semester);
-            System.out.println("Gender: " + s[i].sex + "\t\t" + "Age: " + s[i].age + "\n");
+            System.out.println("Gender: " + s[i].gender + "\t\t" + "Age: " + s[i].age + "\n");
             for (int j = 0; j < 4; j++) {
                 if (j == 0) {
                     System.out.print("FMS:\t");
@@ -164,26 +184,6 @@ public class Main {
             System.out.println("\n>> CGPA = " + s[i].CGPA);
             Status(s[i].CGPA);
             System.out.println("============================================================================");
-        }
-    }
-
-    static void Status(float sta) {
-        if (sta == 4) {
-            System.out.println("Status: Excellent");
-        } else if (sta >= 3.75 && sta <= 3.99) {
-            System.out.println("Status: Very Good");
-        } else if (sta > 3.5 && sta <= 3.74) {
-            System.out.println("Status: Good");
-        } else if (sta > 3.49 && sta <= 3.25) {
-            System.out.println("Status: Above Average");
-        } else if (sta >= 2.0 && sta <= 3.24) {
-            System.out.println("Status: Average");
-        } else if (sta > 1.75 && sta <= 1.99) {
-            System.out.println("Status: Satisfactory");
-        } else if (sta > 1.00 && sta <= 1.74) {
-            System.out.println("Status: Pass");
-        } else if (sta > 0.0 && sta < 1.0) {
-            System.out.println("Status: Fail");
         }
     }
 }
