@@ -61,15 +61,25 @@ public class Main {
     }
 
     static void CourseMark() {
-        for (int i = 0; i < n; i++) {
-            System.out.print("\nEnter Student " + (i + 1) + " FMS Marks: ");
-            s[i].course.FMS = input.nextFloat();
-            System.out.print("Enter Student " + (i + 1) + " OS Marks: ");
-            s[i].course.OS = input.nextFloat();
-            System.out.print("Enter Student " + (i + 1) + " AEE Marks: ");
-            s[i].course.AEE = input.nextFloat();
-            System.out.print("Enter Student " + (i + 1) + " HCI Marks: ");
-            s[i].course.HCI = input.nextFloat();
+        if (s == null || s.length == 0) {
+            System.out.println("\nPlease enter student information first.");
+            return;
+        }
+        else {
+            System.out.println("======================================");
+            System.out.println("          Enter Course Marks");
+            System.out.println("======================================");
+            for (int i = 0; i < n; i++) {
+                System.out.print("\nEnter Student " + (i + 1) + " FMS Marks: ");
+                s[i].course.FMS = input.nextFloat();
+                System.out.print("Enter Student " + (i + 1) + " OS Marks: ");
+                s[i].course.OS = input.nextFloat();
+                System.out.print("Enter Student " + (i + 1) + " AEE Marks: ");
+                s[i].course.AEE = input.nextFloat();
+                System.out.print("Enter Student " + (i + 1) + " HCI Marks: ");
+                s[i].course.HCI = input.nextFloat();
+            }
+            System.out.println("\nCourse marks entered successfully!");
         }
     }
 
@@ -119,22 +129,34 @@ public class Main {
     }
 
     static void Calculate_CGPA() {
-        int credit = 5;
-        int Tcredit = 20;
-        float[] SumofGP = new float[2];
-        for (int a = 0; a < n; a++) {
-            if ((s[a].grade.FMSg != 0 && s[a].grade.OSg != 0) && (s[a].grade.AEEg != 0 && s[a].grade.HCIg != 0)) {
-                SumofGP[a] = (s[a].grade.FMSg * credit) + (s[a].grade.OSg * credit) + (s[a].grade.AEEg * credit) + (s[a].grade.HCIg * credit);
-            } else if (s[a].grade.FMSg == 0) {
-                SumofGP[a] = (s[a].grade.OSg * credit) + (s[a].grade.AEEg * credit) + (s[a].grade.HCIg * credit);
-            } else if (s[a].grade.OSg == 0) {
-                SumofGP[a] = (s[a].grade.FMSg * credit) + (s[a].grade.AEEg * credit) + (s[a].grade.HCIg * credit);
-            } else if (s[a].grade.HCIg == 0) {
-                SumofGP[a] = (s[a].grade.FMSg * credit) + (s[a].grade.OSg * credit) + (s[a].grade.AEEg * credit);
-            } else {
-                SumofGP[a] = (s[a].grade.FMSg * credit) + (s[a].grade.OSg * credit) + (s[a].grade.HCIg * credit);
+        if (s == null || s.length == 0) {
+            System.out.println("\nPlease enter student information first.");
+            return;
+        }
+        else {
+            int credit = 5;
+            int Tcredit = 20;
+            float[] SumofGP = new float[2];
+            for (int a = 0; a < n; a++) {
+                if (s[a].course.FMS == 0 || s[a].course.OS == 0 || s[a].course.AEE == 0 || s[a].course.HCI == 0) {
+                    System.out.println("\nPlease enter course marks for Student " + (a + 1) + " first.");
+                    continue;  // Skip calculating CGPA for this student
+                }
+
+                if ((s[a].grade.FMSg != 0 && s[a].grade.OSg != 0) && (s[a].grade.AEEg != 0 && s[a].grade.HCIg != 0)) {
+                    SumofGP[a] = (s[a].grade.FMSg * credit) + (s[a].grade.OSg * credit) + (s[a].grade.AEEg * credit) + (s[a].grade.HCIg * credit);
+                } else if (s[a].grade.FMSg == 0) {
+                    SumofGP[a] = (s[a].grade.OSg * credit) + (s[a].grade.AEEg * credit) + (s[a].grade.HCIg * credit);
+                } else if (s[a].grade.OSg == 0) {
+                    SumofGP[a] = (s[a].grade.FMSg * credit) + (s[a].grade.AEEg * credit) + (s[a].grade.HCIg * credit);
+                } else if (s[a].grade.HCIg == 0) {
+                    SumofGP[a] = (s[a].grade.FMSg * credit) + (s[a].grade.OSg * credit) + (s[a].grade.AEEg * credit);
+                } else {
+                    SumofGP[a] = (s[a].grade.FMSg * credit) + (s[a].grade.OSg * credit) + (s[a].grade.HCIg * credit);
+                }
+                s[a].CGPA = SumofGP[a] / Tcredit;
+                System.out.println("\nCGPA calculated for Student " + (a + 1) + " successfully!");
             }
-            s[a].CGPA = SumofGP[a] / Tcredit;
         }
     }
 
@@ -159,31 +181,41 @@ public class Main {
     }
 
     static void Display_GradeReport() {
-        System.out.println("\n============================================================================");
-        System.out.println("                         Student Grade Report:");
-        System.out.println("============================================================================");
-        for (int i = 0; i < n; i++) {
-            System.out.println("Full Name: " + s[i].fname + " " + s[i].lname + "\t\tYear:" + s[i].year + "\t\tSemester: " + s[i].semester);
-            System.out.println("Gender: " + s[i].gender + "\t\t" + "Age: " + s[i].age + "\n");
-            for (int j = 0; j < 4; j++) {
-                if (j == 0) {
-                    System.out.print("FMS:\t");
-                    s[i].grade.FMSg = CourseGrade(s[i].course.FMS);
-                } else if (j == 1) {
-                    System.out.print("OS:\t");
-                    s[i].grade.OSg = CourseGrade(s[i].course.OS);
-                } else if (j == 2) {
-                    System.out.print("AEE:\t");
-                    s[i].grade.AEEg = CourseGrade(s[i].course.AEE);
-                } else {
-                    System.out.print("HCI:\t");
-                    s[i].grade.HCIg = CourseGrade(s[i].course.HCI);
-                }
-            }
-            Calculate_CGPA();
-            System.out.println("\n>> CGPA = " + s[i].CGPA);
-            Status(s[i].CGPA);
+        if (s == null || s.length == 0) {
+            System.out.println("\nPlease enter student information first.");
+            return;
+        }
+        else {
+            System.out.println("\n============================================================================");
+            System.out.println("                         Student Grade Report:");
             System.out.println("============================================================================");
+            for (int i = 0; i < n; i++) {
+                if (s[i].course.FMS == 0 || s[i].course.OS == 0 || s[i].course.AEE == 0 || s[i].course.HCI == 0) {
+                    System.out.println("\nPlease enter course marks for Student " + (i + 1) + " first.");
+                    continue;
+                }
+                System.out.println("Full Name: " + s[i].fname + " " + s[i].lname + "\t\tYear:" + s[i].year + "\t\tSemester: " + s[i].semester);
+                System.out.println("Gender: " + s[i].gender + "\t\t" + "Age: " + s[i].age + "\n");
+                for (int j = 0; j < 4; j++) {
+                    if (j == 0) {
+                        System.out.print("FMS:\t");
+                        s[i].grade.FMSg = CourseGrade(s[i].course.FMS);
+                    } else if (j == 1) {
+                        System.out.print("OS:\t");
+                        s[i].grade.OSg = CourseGrade(s[i].course.OS);
+                    } else if (j == 2) {
+                        System.out.print("AEE:\t");
+                        s[i].grade.AEEg = CourseGrade(s[i].course.AEE);
+                    } else {
+                        System.out.print("HCI:\t");
+                        s[i].grade.HCIg = CourseGrade(s[i].course.HCI);
+                    }
+                }
+                Calculate_CGPA();
+                System.out.println("\n>> CGPA = " + s[i].CGPA);
+                Status(s[i].CGPA);
+                System.out.println("============================================================================");
+            }
         }
     }
 }

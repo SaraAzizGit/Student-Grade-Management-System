@@ -30,15 +30,10 @@ public class GradeManagementSystemTest {
                     System.out.println("\nStudent information entered successfully!");
                     break;
                 case 2:
-                    System.out.println("======================================");
-                    System.out.println("          Enter Course Marks");
-                    System.out.println("======================================");
                     Main.CourseMark();
-                    System.out.println("\nCourse marks entered successfully!");
                     break;
                 case 3:
                     Main.Calculate_CGPA();
-                    System.out.println("\nCGPA calculated successfully!");
                     break;
                 case 4:
                     Main.Display_GradeReport();
